@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>邓勇的博客</title><link href="http://www.dengyong.me/" rel="alternate"></link><link href="http://www.dengyong.me/feeds%5Cdengyong.atom.xml" rel="self"></link><id>http://www.dengyong.me/</id><updated>2014-11-30T23:16:00+08:00</updated><entry><title>博客开通了</title><link href="http://www.dengyong.me/posts/blogstart/" rel="alternate"></link><updated>2014-11-30T23:16:00+08:00</updated><author><name>DengYong</name></author><id>tag:www.dengyong.me,2014-11-30:posts/blogstart/</id><summary type="html">&lt;h2&gt;1、一点点经历&lt;/h2&gt;
+&lt;p&gt;今天博客终于开通了，虽然这一天来得比预期的晚，但我还是觉得很兴奋  &lt;/p&gt;
+&lt;p&gt;当时是五一，不小心申请了一个域名  &lt;/p&gt;
+&lt;p&gt;当时是六月，想起用这个域名来作一个博客  &lt;/p&gt;
+&lt;p&gt;后来是七月，发现了jfinal  &lt;/p&gt;
+&lt;p&gt;到了八月，没用bootstrap，没用jquery写了一个页面  &lt;/p&gt;
+&lt;p&gt;也是八月，用jfinal、mysql搭建好后台框架  &lt;/p&gt;
+&lt;p&gt;还是八月，用Java自定标签对页面元素进行一些封装，又发现了sitemesh这个好东东 &lt;/p&gt;
+&lt;p&gt;还是八月，使用原生态的js实现了一个语法高亮插件，支持IE8、chrome、firefox（不支持IE6），支持Java和javascript两种语的高亮显示（其它的一些语言也支持，需要调用者自己传入关键字），代码量压缩后只有1K   &lt;/p&gt;
+&lt;p&gt;九月和十月，想不起具体做什么了，学了一下django、nodejs、easyui  &lt;/p&gt;
+&lt;p&gt;到十一月，发现了pelican、 jinja2，学了一下git，学了一下bootstrap，搭建了本博客  &lt;/p&gt;
+&lt;h2&gt;2、关于本博客的规划&lt;/h2&gt;
+&lt;p&gt;我想主要是写一些在工作和学习中遇到的问题及其解决办法，以及其它&lt;/p&gt;
+&lt;h2&gt;3、一些感慨&lt;/h2&gt;
+&lt;p&gt;当你去想一些事情的时候，你会有所收获；&lt;br /&gt;
+当你去做一些事情的时候，你也会有所收获~&lt;/p&gt;</summary><category term="博客"></category></entry></feed>

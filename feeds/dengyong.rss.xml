@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>邓勇的博客</title><link>http://dengyong.me/</link><description></description><atom:link href="http://dengyong.me/feeds%5Cdengyong.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 30 Nov 2014 23:16:00 +0800</lastBuildDate><item><title>博客开通了</title><link>http://dengyong.me/posts/blogstart/</link><description>&lt;h2&gt;1、一点点经历&lt;/h2&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>邓勇的博客</title><link>http://www.dengyong.me/</link><description></description><atom:link href="http://www.dengyong.me/feeds%5Cdengyong.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 30 Nov 2014 23:16:00 +0800</lastBuildDate><item><title>博客开通了</title><link>http://www.dengyong.me/posts/blogstart/</link><description>&lt;h2&gt;1、一点点经历&lt;/h2&gt;
 &lt;p&gt;今天博客终于开通了，虽然这一天来得比预期的晚，但我还是觉得很兴奋&lt;br /&gt;
 当时是五一，不小心申请了一个域名&lt;br /&gt;
 当时是六月，想起用这个域名来作一个博客&lt;br /&gt;
@@ -14,4 +14,4 @@
 &lt;p&gt;我想主要是写一些在工作和学习中遇到的问题及其解决办法，以及其它&lt;/p&gt;
 &lt;h2&gt;3、一些感慨&lt;/h2&gt;
 &lt;p&gt;当你去想一些事情的时候，你会有所收获；&lt;br /&gt;
-当你去做一些事情的时候，你也会有所收获~&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">DengYong</dc:creator><pubDate>Sun, 30 Nov 2014 23:16:00 +0800</pubDate><guid>tag:dengyong.me,2014-11-30:posts/blogstart/</guid><category>博客</category></item></channel></rss>
+当你去做一些事情的时候，你也会有所收获~&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">DengYong</dc:creator><pubDate>Sun, 30 Nov 2014 23:16:00 +0800</pubDate><guid>tag:www.dengyong.me,2014-11-30:posts/blogstart/</guid><category>博客</category></item></channel></rss>

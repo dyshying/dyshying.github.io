@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>邓勇的博客</title><link>http://www.dengyong.me/</link><description></description><atom:link href="http://www.dengyong.me/feeds%5Cdengyong.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 11 Dec 2014 23:16:00 +0800</lastBuildDate><item><title>修改EasyUI源码，解决datagrid重复请求数据的问题</title><link>http://www.dengyong.me/posts/esayui-datagrid-reloaddata/</link><description>&lt;p&gt;前段时间做前后端分离，前端采用jQuery EasyUI。 EasyUI确实是个不错的东东，在使用过程中还是很有收获的，决定写几篇关于EasyUI的文章（当然不会写使用教程之类的东东，因为官方文档已经足够详细了）&lt;/p&gt;
 &lt;p&gt;在使用datagrid组件时，发现一个很奇怪的问题，那就是当页面向后台请求数据时，如果未请求到数据，则会再请求一次，很显然这是不合理的、多余的&lt;/p&gt;
-&lt;p&gt;因第一次做前后端分离，可怀疑的对象太多了，例如是不是ngnix反向代理配置有问题等，过多番努力寻找，最终觉察到可能是EasyUI的问题&lt;/p&gt;
+&lt;p&gt;因第一次做前后端分离，可怀疑的对象太多了，例如是不是nginx反向代理配置有问题等，过多番努力寻找，最终觉察到可能是EasyUI的问题&lt;/p&gt;
 &lt;p&gt;解决办法：&lt;/p&gt;
 &lt;p&gt;原来的代码&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;8664

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>邓勇的博客</title><link>http://www.dengyong.me/</link><description></description><atom:link href="http://www.dengyong.me/feeds%5Cdengyong.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 11 Dec 2014 23:16:00 +0800</lastBuildDate><item><title>修改EasyUI源码，解决datagrid重复请求数据的问题</title><link>http://www.dengyong.me/posts/esayui-datagrid-reloaddata/</link><description>&lt;p&gt;前段时间做前后端分离，前端采用jQuery EasyUI。 EasyUI确实是个不错的东东，在使用过程中还是很有收获的，决定写几篇关于EasyUI的文章（当然不会写使用教程之类的东东，因为官方文档已经足够详细了）&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>邓勇的博客</title><link href="http://www.dengyong.me/" rel="alternate"></link><link href="http://www.dengyong.me/feeds%5Cdeng-yong.atom.xml" rel="self"></link><id>http://www.dengyong.me/</id><updated>2014-12-11T23:16:00+08:00</updated><entry><title>修改EasyUI源码，解决datagrid重复请求数据的问题</title><link href="http://www.dengyong.me/posts/esayui-datagrid-reloaddata/" rel="alternate"></link><updated>2014-12-11T23:16:00+08:00</updated><author><name>邓勇</name></author><id>tag:www.dengyong.me,2014-12-11:posts/esayui-datagrid-reloaddata/</id><summary type="html">&lt;p&gt;前段时间做前后端分离，前端采用jQuery EasyUI。 EasyUI确实是个不错的东东，在使用过程中还是很有收获的，决定写几篇关于EasyUI的文章（当然不会写使用教程之类的东东，因为官方文档已经足够详细了）&lt;/p&gt;
 &lt;p&gt;在使用datagrid组件时，发现一个很奇怪的问题，那就是当页面向后台请求数据时，如果未请求到数据，则会再请求一次，很显然这是不合理的、多余的&lt;/p&gt;
 &lt;p&gt;因第一次做前后端分离，可怀疑的对象太多了，例如是不是ngnix反向代理配置有问题等，过多番努力寻找，最终觉察到可能是EasyUI的问题&lt;/p&gt;
-&lt;p&gt;解决办法：&lt;/p&gt;
-&lt;p&gt;原来的代码&lt;/p&gt;
+&lt;p&gt;解决办法
+原来的代码&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;8664
 8665
 8666
@@ -20,7 +20,7 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;修改后的代码，在_5d7(_60f);外加了一个判断语句&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;修改后的代码,在_5d7(_60f);外加了一个判断语句&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;8664
 8665
 8666
@@ -49,19 +49,4 @@
 &lt;li&gt;很显然，没请求到数据时（即数据条数为0），以上两个值不相等，按原来的代码就会再去请求一次，加上判断后，问题解决&lt;/li&gt;
 &lt;li&gt;datagrid加载数据这一块代码，其实是一个间接递归的过程，有意者可自行调试看看（因这并不是真正的源码，而是经过压缩过的，调试起来比较费劲）&lt;/li&gt;
 &lt;/ol&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">DengYong</dc:creator><pubDate>Thu, 11 Dec 2014 23:16:00 +0800</pubDate><guid>tag:www.dengyong.me,2014-12-11:posts/esayui-datagrid-reloaddata/</guid><category>EasyUI</category><category>datagrid</category><category>前端</category></item><item><title>博客开通了</title><link>http://www.dengyong.me/posts/blogstart/</link><description>&lt;h2&gt;1、一点点经历&lt;/h2&gt;
-&lt;p&gt;今天博客终于开通了，虽然这一天来得比预期的晚，但我还是觉得很兴奋&lt;br /&gt;
-当时是五一，不小心申请了一个域名&lt;br /&gt;
-当时是六月，想起用这个域名来作一个博客&lt;br /&gt;
-后来是七月，发现了jfinal&lt;br /&gt;
-到了八月，没用bootstrap，没用jquery写了一个页面&lt;br /&gt;
-也是八月，用jfinal、mysql搭建好后台框架&lt;br /&gt;
-还是八月，用Java自定义标签对页面元素进行一些封装，又发现了sitemesh这个好东东&lt;br /&gt;
-还是八月，使用原生态的js实现了一个语法高亮插件，支持IE8、chrome、firefox，支持Java和javascript两种语法的高亮显示，代码量压缩后只有1K &lt;br /&gt;
-九月和十月，想不起具体做什么了，学了一下django、nodejs、easyui&lt;br /&gt;
-到十一月，发现了pelican、 jinja2，学了一下git，学了一下bootstrap，搭建了本博客  &lt;/p&gt;
-&lt;h2&gt;2、关于本博客的规划&lt;/h2&gt;
-&lt;p&gt;我想主要是写一些在工作和学习中遇到的问题及其解决办法，以及其它&lt;/p&gt;
-&lt;h2&gt;3、一些感慨&lt;/h2&gt;
-&lt;p&gt;当你去想一些事情的时候，你会有所收获；&lt;br /&gt;
-当你去做一些事情的时候，你也会有所收获~&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">DengYong</dc:creator><pubDate>Sun, 30 Nov 2014 23:16:00 +0800</pubDate><guid>tag:www.dengyong.me,2014-11-30:posts/blogstart/</guid><category>博客</category></item></channel></rss>
+</summary><category term="EasyUI"></category><category term="datagrid"></category><category term="前端"></category></entry></feed>

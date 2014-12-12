@@ -158,7 +158,7 @@ tt.literal {
 </pre></div>
 </td></tr></table><p><strong>说明</strong></p>
 <ol class="arabic simple">
-<li><tt class="docutils literal">_5d7(_60f);</tt> 这一行的作用就是向后台请求数据&lt;code&gt;abc&lt;/code&gt;</li>
+<li><tt class="docutils literal">_5d7(_60f);</tt> 这一行的作用就是向后台请求数据</li>
 <li><tt class="docutils literal">_615.pageNumber</tt> 则是请求到的数据页数，没数据时，它是0</li>
 <li><tt class="docutils literal">opts.pageNumber</tt> 则是默认时页数，它是1</li>
 <li>很显然，没请求到数据时（即数据条数为0），以上两个值不相等，按原来的代码就会再去请求一次，加上判断后，问题解决</li>

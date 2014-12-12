@@ -51,7 +51,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;strong&gt;说明&lt;/strong&gt;&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;_5d7(_60f);&lt;/tt&gt; 这一行的作用就是向后台请求数据&amp;lt;code&amp;gt;abc&amp;lt;/code&amp;gt;&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;_5d7(_60f);&lt;/tt&gt; 这一行的作用就是向后台请求数据&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;_615.pageNumber&lt;/tt&gt; 则是请求到的数据页数，没数据时，它是0&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;opts.pageNumber&lt;/tt&gt; 则是默认时页数，它是1&lt;/li&gt;
 &lt;li&gt;很显然，没请求到数据时（即数据条数为0），以上两个值不相等，按原来的代码就会再去请求一次，加上判断后，问题解决&lt;/li&gt;

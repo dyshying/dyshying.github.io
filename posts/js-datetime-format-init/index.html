@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js时间日期格式化及EasyUI时间控件的初始化- 邓勇的博客
+</title>
+    <link href="/theme/css/pygment.css" type="text/css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/style.css" type="text/css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    body{
+        background-color: #E3E3E3;
+    }
+.article-body{
+    padding: 10px;
+    background-color: #FFF;
+    -webkit-box-shadow: 0 5px 10px #bbb;
+    box-shadow: 0 5px 10px #bbb;
+}
+.article-content h2{
+    font-size: 24px;
+    font-weight: bold;
+}
+.article-content h3{
+    font-size: 20px;
+    font-weight: bold;
+}
+.article-content h4{
+    font-size: 16px;
+    font-weight: bold;
+}
+.article-content{
+    line-height: 28px;
+}
+.article-content p,
+.article-content .line-block{
+    margin-bottom: 10px;
+}
+tt.literal {
+    font-family: 'Courier New',"courier";
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button"
+                            class="navbar-toggle collapsed"
+                            data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li style="width:180px; text-align: center;"><a href="/"><img src="/theme/images/logo.png" alt="DengYong's Blog" height="18"></a></li>
+                        <li >
+                            <a href="/">首页</a>
+                        </li>
+                                <li  class="active" >
+                                    <a href="/category/cheng-xu.html">程序</a>
+                                </li>
+                                <li >
+                                    <a href="/category/ren-sheng.html">人生</a>
+                                </li>
+                        <li  >
+                            <a href="/tags.html">Tags</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container row">
+        <div class="col-md-9">
+<div class="article-body">
+<h1>js时间日期格式化及EasyUI时间控件的初始化</h1>
+<span class="label label-default">
+2014-12-13 15:30
+</span>&nbsp;
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/easyui.html">EasyUI</a>
+</div>
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/datetimebox.html">datetimebox</a>
+</div>
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/javascript.html">javascript</a>
+</div>
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/qian-duan.html">前端</a>
+</div>
+<hr>
+<div class="article-content">
+<div class="section" id="id1">
+<h2>目录</h2>
+<ol class="arabic simple">
+<li>js时间日期格式化</li>
+<li>时间日期处理(时间日期的计算)</li>
+<li>EasyUI的datetimebox的时间日期初始化</li>
+</ol>
+</div>
+<div class="section" id="js">
+<h2>js时间日期格式化</h2>
+<p>javascript没有提供标准可用的时间格式化相关方法，该格式化方法是在网上搜的（原文地址现在没搜着了，下次若看着了再注明原地址），经过细微修改而成的。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//格式化时间</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">formatDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span><span class="nx">format</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">paddNum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">+</span> <span class="nx">num</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^(\d)$/</span><span class="p">,</span><span class="s2">&quot;0$1&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">//指定格式字符</span>
+        <span class="kd">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="nx">yyyy</span> <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="c1">//年</span>
+                <span class="p">,</span><span class="nx">yy</span> <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">().</span><span class="nx">toString</span><span class="p">().</span><span class="nx">substring</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="p">,</span><span class="nx">M</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">//月</span>
+                <span class="p">,</span><span class="nx">MM</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="p">,</span><span class="nx">d</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="c1">//日</span>
+                <span class="p">,</span><span class="nx">dd</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">())</span>
+                <span class="p">,</span><span class="nx">H</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="c1">//时: 24小时制</span>
+                <span class="p">,</span><span class="nx">HH</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">())</span>
+                <span class="p">,</span><span class="nx">h</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">?</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">-</span><span class="mi">12</span><span class="o">:</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="c1">//时：12小时制</span>
+                <span class="p">,</span><span class="nx">hh</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">?</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">-</span><span class="mi">12</span><span class="o">:</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">())</span>
+                <span class="p">,</span><span class="nx">m</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span>
+                <span class="p">,</span><span class="nx">mm</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">())</span> <span class="c1">//分</span>
+                <span class="p">,</span><span class="nx">s</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span>
+                <span class="p">,</span><span class="nx">ss</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">())</span> <span class="c1">//秒</span>
+                <span class="p">,</span><span class="nx">SSS</span><span class="o">:</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">+</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMilliseconds</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//毫秒</span>
+        <span class="p">}</span>
+        <span class="nx">format</span> <span class="o">||</span> <span class="p">(</span><span class="nx">format</span> <span class="o">=</span> <span class="s2">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">format</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([a-z])(\1)*/ig</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">cfg</span><span class="p">[</span><span class="nx">m</span><span class="p">];</span>
+        <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p><strong>说明</strong></p>
+<ol class="arabic simple">
+<li>该函数的两个参数分别为：1）时间日期 2）格式化字符串</li>
+<li>返回值：按照format格式化的时间日期字符串</li>
+<li>举例说明（以当前时间为2014-12-13 15:30:12为例, <tt class="docutils literal">var date = new <span class="pre">Date();</span></tt> ）：</li>
+</ol>
+<table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">调用方式</th>
+<th class="head">返回值</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>$.formatDate(date, 'yyyy-MM-dd HH:mm:ss,SSS');</td>
+<td>2014-12-13 15:30:12,000</td>
+</tr>
+<tr><td>$.formatDate(date, 'yyyy-MM-dd HH:mm:ss');</td>
+<td>2014-12-13 15:30:12</td>
+</tr>
+<tr><td>$.formatDate(date, 'yyyy-MM-dd HH:mm');</td>
+<td>2014-12-13 15:30</td>
+</tr>
+<tr><td>$.formatDate(date, 'HH:mm:ss');</td>
+<td>15:30:12</td>
+</tr>
+<tr><td>$.formatDate(date, 'yyyy年MM月dd日');</td>
+<td>2014年12月13日</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h2>时间日期处理(时间日期的计算)</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * 获取指定格式日期字符串</span>
+<span class="cm"> * 参数：可传入三个参数，参数不分先后</span>
+<span class="cm"> * Date类型参数：表示指定的时间，如果没有则为当前时间</span>
+<span class="cm"> * String类型参数：格式，如果没有则为yyyy-MM-dd HH:mm:ss</span>
+<span class="cm"> * Object类型参数：对时间的处理，该参数可以有的属性：d:表示日，M：表示月，m:表示分钟，H:表示小时，y:表示年</span>
+<span class="cm"> * 示例:$.getDateStr(new Date,&#39;yyyy-MM-dd HH:mm:ss&#39;, {d:-3,H:5});将得5小时后的3天前</span>
+<span class="cm"> */</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">getDateStr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">date</span><span class="p">,</span> <span class="nx">format</span><span class="p">,</span> <span class="nx">options</span><span class="p">;</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">arg</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">arg</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">arg</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">){</span>
+                        <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span><span class="p">((</span><span class="k">typeof</span> <span class="nx">arg</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">==</span> <span class="nb">String</span><span class="p">){</span>
+                        <span class="nx">format</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="k">typeof</span> <span class="nx">arg</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">))</span> <span class="p">{</span>
+                        <span class="k">if</span><span class="p">(</span><span class="nx">arg</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">==</span> <span class="nb">Date</span><span class="p">){</span>
+                                <span class="nx">date</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                                <span class="nx">options</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
+                        <span class="p">}</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="nx">date</span> <span class="o">=</span> <span class="nx">date</span> <span class="o">||</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+        <span class="nx">format</span> <span class="o">=</span> <span class="nx">format</span> <span class="o">||</span> <span class="s2">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">;</span>
+        <span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span> <span class="o">||</span> <span class="p">{};</span>
+
+        <span class="kd">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="nx">d</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//天</span>
+                        <span class="nx">date</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">M</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//月</span>
+                        <span class="nx">date</span><span class="p">.</span><span class="nx">setMonth</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">m</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//分钟</span>
+                        <span class="nx">date</span><span class="p">.</span><span class="nx">setMinutes</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">H</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//小时</span>
+                        <span class="nx">date</span><span class="p">.</span><span class="nx">setHours</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">y</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//年</span>
+                        <span class="nx">date</span><span class="p">.</span><span class="nx">setFullYear</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">s</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//秒</span>
+                        <span class="nx">date</span><span class="p">.</span><span class="nx">setSeconds</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">S</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//毫秒</span>
+                        <span class="nx">date</span><span class="p">.</span><span class="nx">setMilliseconds</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMilliseconds</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="k">in</span> <span class="nx">options</span><span class="p">){</span>
+                <span class="nx">cfg</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">cfg</span><span class="p">[</span><span class="nx">k</span><span class="p">](</span><span class="nx">options</span><span class="p">[</span><span class="nx">k</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">formatDate</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="nx">format</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p><strong>说明</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">调用方式</th>
+<th class="head">返回值</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>$.getDateStr()</td>
+<td>2014-12-13 15:30:12</td>
+</tr>
+<tr><td>$.getDateStr({d: 1})</td>
+<td>2014-12-14 15:30:12</td>
+</tr>
+<tr><td>$.getDateStr({d: -1})</td>
+<td>2014-12-12 15:30:12</td>
+</tr>
+<tr><td>$.getDateStr({d: -13})</td>
+<td>2014-11-30 15:30:12</td>
+</tr>
+<tr><td>$.getDateStr({H: -1})</td>
+<td>2014-12-13 14:30:12</td>
+</tr>
+<tr><td>$.getDateStr({M:-1, d: 1})</td>
+<td>2014-11-14 14:30:12</td>
+</tr>
+<tr><td>$.getDateStr('yyyy-MM-dd')</td>
+<td>2014-12-13</td>
+</tr>
+<tr><td>$.getDateStr({M:-1},'yyyy-MM')</td>
+<td>2014-11</td>
+</tr>
+<tr><td>var d = new Date();</td>
+<td rowspan="3">2014-12-25 00:00:00</td>
+</tr>
+<tr><td>d.setDate(25);</td>
+</tr>
+<tr><td>$.getDateStr(d,{M:-1},'yyyy-MM-dd 00:00:00');</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="easyuidatetimebox">
+<h2>EasyUI时间控件datetimebox的初始化</h2>
+<div class="line-block">
+<div class="line">刚使用EasyUI的时间控件时，遇到一个问题，那就是如何初始化该该控件为系统当前时间或当前时间前一个小时，在网上搜了很久也没有满意答案</div>
+<div class="line">本文前两点时间格式化和时间日期计算都是为了这个EasyUI时间控件初始化做准备的</div>
+<div class="line">使用方式如下</div>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;startTime&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;startTime&quot;</span>  <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;easyui-datetimebox&quot;</span>
+        <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">&quot;required:true,missingMessage:&#39;开始时间不能为空&#39;, editable:false,</span>
+<span class="s2">        value:$.getDateStr({H:-1})&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;width:183px;&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</td></tr></table><p><strong>说明</strong></p>
+<p>这里的 <tt class="docutils literal"><span class="pre">value:$.getDateStr({H:-1})</span></tt> 即是设置初始时间为当前时间的前一个小时</p>
+<p>完</p>
+</div>
+
+</div>
+<div>
+    <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</div>
+<hr>
+<div class="alert alert-info">
+    <p>版权属于：<a href="http://www.dengyong.me">邓勇的博客</a></p>
+    <p>原文地址：<a href="http://www.dengyong.me/posts/js-datetime-format-init/">
+        http://www.dengyong.me/posts/js-datetime-format-init/
+    </a></p>
+    <p>转载时请以链接形式注明原始出处及本声明。
+</div>
+
+<ul>
+    <li>
+        旧一篇：<a href="/posts/esayui-datagrid-reloaddata/">
+            修改EasyUI源码，解决datagrid重复请求数据的问题
+        </a>
+    </li>
+    <li>
+        新一篇：<a href="/"> 没有了，回到首页</a>
+    </li>
+</ul>    <hr>
+    <h3>相关阅读</h3>
+    <ul>
+        <li><a href="/posts/esayui-datagrid-reloaddata/">修改EasyUI源码，解决datagrid重复请求数据的问题</a></li>
+    </ul>
+    <br>
+    <h3>最新文章</h3>
+    <ul>
+<li>
+        <a href="/posts/js-datetime-format-init/">js时间日期格式化及EasyUI时间控件的初始化</a>
+        </li><li>
+        <a href="/posts/esayui-datagrid-reloaddata/">修改EasyUI源码，解决datagrid重复请求数据的问题</a>
+        </li><li>
+        <a href="/posts/blogstart/">博客开通了</a>
+        </li>    </ul>
+    <br>
+
+<!-- UY BEGIN -->
+<div class="comments">
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1986444"></script>
+</div>
+<!-- UY END -->
+        </div>
+        <div class="col-md-3">
+
+</div>
+        </div>
+    </div>
+    <footer class="bs-docs-footer" role="contentinfo">
+        <div class="container">
+            <hr>
+            <p>
+                Copyright &copy; 2014 - 2114
+                <span class="credit"><a href="/">DengYong</a>&nbsp;</span>
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253666473'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253666473%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+            </p>
+            <br>
+        </div>
+    </footer>
+</body>
+</html>

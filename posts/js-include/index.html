@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js获取项目根路径及实现include- 邓勇的博客
+</title>
+    <link href="/theme/css/pygment.css" type="text/css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/style.css" type="text/css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    body{
+        background-color: #E3E3E3;
+    }
+.article-body{
+    padding: 10px;
+    background-color: #FFF;
+    -webkit-box-shadow: 0 5px 10px #bbb;
+    box-shadow: 0 5px 10px #bbb;
+}
+.article-content h2{
+    font-size: 24px;
+    font-weight: bold;
+}
+.article-content h3{
+    font-size: 20px;
+    font-weight: bold;
+}
+.article-content h4{
+    font-size: 16px;
+    font-weight: bold;
+}
+.article-content{
+    line-height: 28px;
+}
+.article-content p,
+.article-content .line-block{
+    margin-bottom: 10px;
+}
+tt.literal {
+    font-family: 'Courier New',"courier";
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button"
+                            class="navbar-toggle collapsed"
+                            data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li style="width:180px; text-align: center;"><a href="/"><img src="/theme/images/logo.png" alt="DengYong's Blog" height="18"></a></li>
+                        <li >
+                            <a href="/">首页</a>
+                        </li>
+                                <li  class="active" >
+                                    <a href="/category/cheng-xu.html">程序</a>
+                                </li>
+                                <li >
+                                    <a href="/category/ren-sheng.html">人生</a>
+                                </li>
+                        <li  >
+                            <a href="/tags.html">Tags</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container row">
+        <div class="col-md-9">
+<div class="article-body">
+<h1>js获取项目根路径及实现include</h1>
+<span class="label label-default">
+2014-12-13 20:36
+</span>&nbsp;
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/javascript.html">javascript</a>
+</div>
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/include.html">include</a>
+</div>
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/xiang-mu-gen-lu-jing.html">项目根路径</a>
+</div>
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/qian-duan.html">前端</a>
+</div>
+<hr>
+<div class="article-content">
+<div class="section" id="id1">
+<h2>背景介绍</h2>
+<div class="line-block">
+<div class="line">做前后端分离，前端使用nginx，后端使用tomcat。</div>
+<div class="line">页面有些共公引用的css和js，即所有页面都会引的css和js</div>
+<div class="line">以前未分离时，页面用jsp，可以把这些css和js的引入写在一个页面，然后每个jsp使用include标签包含该文件</div>
+<div class="line">分离后要求页面使用html，html没有类似jsp的include标签，那么只好每个html页面都写一堆script和link标签</div>
+<div class="line">那么问题来了，</div>
+<div class="line-block">
+<div class="line">1）每个页面都写一堆相同的代码，代码量多，且易出错</div>
+<div class="line">2）如果哪天更换某js或css，或都每个页面都要加一个js或css，则需要修改所有html页面</div>
+</div>
+<div class="line">为了解决以上这些问题，考虑写一个js,该js文件有include方法，用于引入一些共有的js和css</div>
+<div class="line">每个页面引入该js即可</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>实现准备</h2>
+<div class="line-block">
+<div class="line">写一个include.js</div>
+<div class="line">为了更方便的写好文件引入方法，我们先做点准备</div>
+<div class="line">startWith和endWith方法</div>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startWith</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">str</span><span class="o">!=</span><span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="o">!=</span><span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="o">!=</span><span class="s2">&quot;&quot;</span> <span class="o">&amp;&amp;</span>
+            <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="o">&lt;=</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">==</span><span class="nx">str</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">endWith</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">str</span><span class="o">!=</span><span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="o">!=</span><span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="o">!=</span><span class="s2">&quot;&quot;</span> <span class="o">&amp;&amp;</span>
+        <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="o">&lt;=</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">==</span><span class="nx">str</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="id3">
+<h2>获取项目根路径</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//修正路径</span>
+<span class="kd">function</span> <span class="nx">fixPath</span><span class="p">(</span><span class="nx">src</span><span class="p">){</span>
+    <span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\/\.\//g</span><span class="p">,</span> <span class="s2">&quot;\/&quot;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([^\:])\/+/g</span><span class="p">,</span> <span class="s2">&quot;$1\/&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;../&quot;</span><span class="p">);</span>
+    <span class="k">while</span><span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[^\/]+\/\.\.\//g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+        <span class="nx">index</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;../&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">src</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//项目根路径</span>
+<span class="kd">function</span> <span class="nx">getRootPath</span><span class="p">(){</span>
+
+    <span class="kd">var</span> <span class="nx">scripts</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="nx">script</span> <span class="o">=</span> <span class="nx">scripts</span><span class="p">[</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">,</span> <span class="nx">src</span> <span class="o">=</span> <span class="nx">script</span><span class="p">.</span><span class="nx">src</span>
+        <span class="p">,</span> <span class="nx">href</span> <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">href</span>
+        <span class="p">,</span> <span class="nx">pathname</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span>
+        <span class="p">,</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nx">href</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">pathname</span><span class="p">)</span>
+        <span class="p">,</span> <span class="nx">localhostPath</span> <span class="o">=</span> <span class="nx">href</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">pos</span><span class="p">)</span>
+        <span class="p">,</span> <span class="nx">len</span> <span class="p">,</span> <span class="nx">i</span> <span class="p">,</span> <span class="nx">str</span><span class="p">;</span>
+
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">href</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)</span><span class="o">&gt;-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="nx">href</span> <span class="o">=</span> <span class="nx">href</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">href</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">src</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)</span><span class="o">&gt;-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">src</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">src</span><span class="p">.</span><span class="nx">startWith</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">)){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">src</span><span class="p">.</span><span class="nx">startWith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)){</span>
+            <span class="nx">src</span> <span class="o">=</span> <span class="nx">localhostPath</span> <span class="o">+</span> <span class="nx">src</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">src</span><span class="p">.</span><span class="nx">startWith</span><span class="p">(</span><span class="s2">&quot;./&quot;</span><span class="p">)){</span>
+            <span class="nx">src</span> <span class="o">=</span> <span class="nx">localhostPath</span> <span class="o">+</span> <span class="nx">src</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">src</span><span class="p">.</span><span class="nx">startWith</span><span class="p">(</span><span class="s2">&quot;../&quot;</span><span class="p">)){</span>
+            <span class="nx">src</span> <span class="o">=</span> <span class="nx">href</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">href</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">src</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">src</span> <span class="o">=</span> <span class="nx">fixPath</span><span class="p">(</span><span class="nx">src</span><span class="p">);</span>
+
+    <span class="nx">len</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">src</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">href</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="nx">pos</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">src</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">href</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">)){</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">str</span> <span class="o">=</span> <span class="nx">href</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">i</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">str</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">$contextPath</span> <span class="o">=</span> <span class="nx">getRootPath</span><span class="p">();</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="include">
+<h2>实现include</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//获取文件后缀名</span>
+<span class="kd">function</span> <span class="nx">getFileExt</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">reg</span> <span class="o">=</span> <span class="sr">/.*\.([^\.\/]+)/g</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">reg</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//文件引入</span>
+<span class="kd">function</span> <span class="nx">include</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="nx">basePath</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">basePath</span> <span class="o">=</span> <span class="p">(</span><span class="nx">basePath</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">basePath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">ext</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">src</span><span class="p">,</span> <span class="nx">bp</span> <span class="o">=</span> <span class="nx">basePath</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;string&#39;</span><span class="p">){</span>
+            <span class="nx">ext</span> <span class="o">=</span> <span class="nx">getFileExt</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+            <span class="nx">file</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="s2">&quot;object&quot;</span><span class="p">){</span>
+            <span class="nx">file</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">file</span><span class="p">;</span>
+            <span class="nx">ext</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">ext</span> <span class="o">||</span> <span class="nx">getFileExt</span><span class="p">(</span><span class="nx">file</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">basePath</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">){</span>
+                <span class="nx">bp</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">basePath</span> <span class="o">&amp;&amp;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">basePath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">src</span> <span class="o">=</span> <span class="nx">fixPath</span><span class="p">(</span><span class="nx">bp</span> <span class="o">+</span> <span class="nx">file</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">ext</span> <span class="o">==</span> <span class="s2">&quot;js&quot;</span><span class="p">){</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt;script type=&quot;text/javascript&quot; src=&quot;&#39;</span> <span class="o">+</span> <span class="nx">src</span> <span class="o">+</span><span class="s1">&#39;&quot;&gt;&lt;/script&gt;&#39;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">ext</span> <span class="o">==</span> <span class="s2">&quot;css&quot;</span><span class="p">){</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;&#39;</span><span class="o">+</span> <span class="nx">src</span> <span class="o">+</span><span class="s1">&#39;&quot; type=&quot;text/css&quot; /&gt;&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>include方法的调用，引入一些公用的js和css</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre></div></td><td class="code"><div class="highlight"><pre><span class="nx">include</span><span class="p">([</span>
+    <span class="s2">&quot;../lib/jquery-easyui-1.4/themes/metro/easyui.css&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;../lib/jquery-easyui-1.4/themes/icon.css&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;resource/css/jeasyui-icon.css&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;resource/css/common.css&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;../lib/jquery-easyui-1.4/jquery.min.js&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;../lib/jquery-easyui-1.4/jquery.easyui.min.js&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;../lib/jquery-easyui-1.4/locale/easyui-lang-zh_CN.js&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;resource/js/jeasyui-extend.js&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;resource/js/common.js&quot;</span>
+<span class="p">],</span> <span class="nx">$contextPath</span><span class="p">);</span>
+</pre></div>
+</td></tr></table><p><strong>说明</strong></p>
+<ol class="arabic simple">
+<li>每个页面引入include.js即可</li>
+<li>include的第二参数是一个参考路径，即引入的文件路径都是相对于该路径，可为空</li>
+<li>引入的文件的路径可以是相对路径也可以是绝对路径</li>
+<li>文件路径中可以有../或./这样的形式，分别表示上级路径和当前路径直</li>
+<li>include方法第一个参数数组元素如果是字符串，则按后缀然判断是js还是css</li>
+<li>如果你要引入的css不是以.css结尾，或引入的js不是以.js结尾，那么也有相应的写法</li>
+</ol>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="nx">include</span><span class="p">([{</span>
+        <span class="nx">ext</span><span class="o">:</span><span class="s1">&#39;js&#39;</span><span class="p">,</span>
+        <span class="nx">file</span><span class="o">:</span> <span class="s1">&#39;yourjavascriptfilepath&#39;</span>
+    <span class="p">},{</span>
+        <span class="nx">ext</span><span class="o">:</span> <span class="s1">&#39;css&#39;</span><span class="p">,</span>
+        <span class="nx">file</span><span class="o">:</span> <span class="s1">&#39;yourcssfilepath&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;normalcss.css&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;normaljs.js&quot;</span>
+<span class="p">],</span> <span class="nx">$contextPath</span><span class="p">);</span>
+</pre></div>
+</td></tr></table><p>完</p>
+</div>
+
+</div>
+<div>
+    <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</div>
+<hr>
+<div class="alert alert-info">
+    <p>版权属于：<a href="http://www.dengyong.me">邓勇的博客</a></p>
+    <p>原文地址：<a href="http://www.dengyong.me/posts/js-include/">
+        http://www.dengyong.me/posts/js-include/
+    </a></p>
+    <p>转载时请以链接形式注明原始出处及本声明。
+</div>
+
+<ul>
+    <li>
+        旧一篇：<a href="/posts/js-datetime-format-init/">
+            js时间日期格式化及EasyUI时间控件的初始化
+        </a>
+    </li>
+    <li>
+        新一篇：<a href="/"> 没有了，回到首页</a>
+    </li>
+</ul>    <hr>
+    <h3>相关阅读</h3>
+    <ul>
+        <li><a href="/posts/js-datetime-format-init/">js时间日期格式化及EasyUI时间控件的初始化</a></li>
+        <li><a href="/posts/esayui-datagrid-reloaddata/">修改EasyUI源码，解决datagrid重复请求数据的问题</a></li>
+    </ul>
+    <br>
+    <h3>最新文章</h3>
+    <ul>
+<li>
+        <a href="/posts/js-include/">js获取项目根路径及实现include</a>
+        </li><li>
+        <a href="/posts/js-datetime-format-init/">js时间日期格式化及EasyUI时间控件的初始化</a>
+        </li><li>
+        <a href="/posts/esayui-datagrid-reloaddata/">修改EasyUI源码，解决datagrid重复请求数据的问题</a>
+        </li><li>
+        <a href="/posts/blogstart/">博客开通了</a>
+        </li>    </ul>
+    <br>
+
+<!-- UY BEGIN -->
+<div class="comments">
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1986444"></script>
+</div>
+<!-- UY END -->
+        </div>
+        <div class="col-md-3">
+
+</div>
+        </div>
+    </div>
+    <footer class="bs-docs-footer" role="contentinfo">
+        <div class="container">
+            <hr>
+            <p>
+                Copyright &copy; 2014 - 2114
+                <span class="credit"><a href="/">DengYong</a>&nbsp;</span>
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253666473'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253666473%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+            </p>
+            <br>
+        </div>
+    </footer>
+</body>
+</html>

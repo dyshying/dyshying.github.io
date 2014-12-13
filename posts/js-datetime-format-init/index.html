@@ -149,31 +149,31 @@ tt.literal {
 28
 29</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//格式化时间</span>
 <span class="nx">$</span><span class="p">.</span><span class="nx">formatDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span><span class="nx">format</span><span class="p">){</span>
-        <span class="kd">var</span> <span class="nx">paddNum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
-                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">+</span> <span class="nx">num</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^(\d)$/</span><span class="p">,</span><span class="s2">&quot;0$1&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="c1">//指定格式字符</span>
-        <span class="kd">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="nx">yyyy</span> <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="c1">//年</span>
-                <span class="p">,</span><span class="nx">yy</span> <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">().</span><span class="nx">toString</span><span class="p">().</span><span class="nx">substring</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-                <span class="p">,</span><span class="nx">M</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">//月</span>
-                <span class="p">,</span><span class="nx">MM</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="p">,</span><span class="nx">d</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="c1">//日</span>
-                <span class="p">,</span><span class="nx">dd</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">())</span>
-                <span class="p">,</span><span class="nx">H</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="c1">//时: 24小时制</span>
-                <span class="p">,</span><span class="nx">HH</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">())</span>
-                <span class="p">,</span><span class="nx">h</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">?</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">-</span><span class="mi">12</span><span class="o">:</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="c1">//时：12小时制</span>
-                <span class="p">,</span><span class="nx">hh</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">?</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">-</span><span class="mi">12</span><span class="o">:</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">())</span>
-                <span class="p">,</span><span class="nx">m</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span>
-                <span class="p">,</span><span class="nx">mm</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">())</span> <span class="c1">//分</span>
-                <span class="p">,</span><span class="nx">s</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span>
-                <span class="p">,</span><span class="nx">ss</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">())</span> <span class="c1">//秒</span>
-                <span class="p">,</span><span class="nx">SSS</span><span class="o">:</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">+</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMilliseconds</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//毫秒</span>
-        <span class="p">}</span>
-        <span class="nx">format</span> <span class="o">||</span> <span class="p">(</span><span class="nx">format</span> <span class="o">=</span> <span class="s2">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="nx">format</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([a-z])(\1)*/ig</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">){</span>
-                <span class="k">return</span> <span class="nx">cfg</span><span class="p">[</span><span class="nx">m</span><span class="p">];</span>
-        <span class="p">});</span>
+    <span class="kd">var</span> <span class="nx">paddNum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">+</span> <span class="nx">num</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^(\d)$/</span><span class="p">,</span><span class="s2">&quot;0$1&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">//指定格式字符</span>
+    <span class="kd">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">yyyy</span> <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="c1">//年</span>
+        <span class="p">,</span><span class="nx">yy</span> <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">().</span><span class="nx">toString</span><span class="p">().</span><span class="nx">substring</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">,</span><span class="nx">M</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">//月</span>
+        <span class="p">,</span><span class="nx">MM</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">,</span><span class="nx">d</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="c1">//日</span>
+        <span class="p">,</span><span class="nx">dd</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">())</span>
+        <span class="p">,</span><span class="nx">H</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="c1">//时: 24小时制</span>
+        <span class="p">,</span><span class="nx">HH</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">())</span>
+        <span class="p">,</span><span class="nx">h</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">?</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">-</span><span class="mi">12</span><span class="o">:</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="c1">//时：12小时制</span>
+        <span class="p">,</span><span class="nx">hh</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">?</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">-</span><span class="mi">12</span><span class="o">:</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">())</span>
+        <span class="p">,</span><span class="nx">m</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span>
+        <span class="p">,</span><span class="nx">mm</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">())</span> <span class="c1">//分</span>
+        <span class="p">,</span><span class="nx">s</span>  <span class="o">:</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span>
+        <span class="p">,</span><span class="nx">ss</span> <span class="o">:</span> <span class="nx">paddNum</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">())</span> <span class="c1">//秒</span>
+        <span class="p">,</span><span class="nx">SSS</span><span class="o">:</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">+</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMilliseconds</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//毫秒</span>
+    <span class="p">}</span>
+    <span class="nx">format</span> <span class="o">||</span> <span class="p">(</span><span class="nx">format</span> <span class="o">=</span> <span class="s2">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">format</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([a-z])(\1)*/ig</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">cfg</span><span class="p">[</span><span class="nx">m</span><span class="p">];</span>
+    <span class="p">});</span>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table><p><strong>说明</strong></p>
@@ -280,55 +280,55 @@ tt.literal {
 <span class="cm"> * 示例:$.getDateStr(new Date,&#39;yyyy-MM-dd HH:mm:ss&#39;, {d:-3,H:5});将得5小时后的3天前</span>
 <span class="cm"> */</span>
 <span class="nx">$</span><span class="p">.</span><span class="nx">getDateStr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-        <span class="kd">var</span> <span class="nx">date</span><span class="p">,</span> <span class="nx">format</span><span class="p">,</span> <span class="nx">options</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">date</span><span class="p">,</span> <span class="nx">format</span><span class="p">,</span> <span class="nx">options</span><span class="p">;</span>
 
-        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-                <span class="kd">var</span> <span class="nx">arg</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-                <span class="k">if</span><span class="p">(</span><span class="nx">arg</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">arg</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">){</span>
-                        <span class="k">continue</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">if</span><span class="p">((</span><span class="k">typeof</span> <span class="nx">arg</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">==</span> <span class="nb">String</span><span class="p">){</span>
-                        <span class="nx">format</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="k">typeof</span> <span class="nx">arg</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">))</span> <span class="p">{</span>
-                        <span class="k">if</span><span class="p">(</span><span class="nx">arg</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">==</span> <span class="nb">Date</span><span class="p">){</span>
-                                <span class="nx">date</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
-                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                                <span class="nx">options</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
-                        <span class="p">}</span>
-                <span class="p">}</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">arg</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">arg</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">arg</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">){</span>
+            <span class="k">continue</span><span class="p">;</span>
         <span class="p">}</span>
+        <span class="k">if</span><span class="p">((</span><span class="k">typeof</span> <span class="nx">arg</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">==</span> <span class="nb">String</span><span class="p">){</span>
+            <span class="nx">format</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="k">typeof</span> <span class="nx">arg</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">arg</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">==</span> <span class="nb">Date</span><span class="p">){</span>
+                <span class="nx">date</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">options</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-        <span class="nx">date</span> <span class="o">=</span> <span class="nx">date</span> <span class="o">||</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
-        <span class="nx">format</span> <span class="o">=</span> <span class="nx">format</span> <span class="o">||</span> <span class="s2">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">;</span>
-        <span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span> <span class="o">||</span> <span class="p">{};</span>
+    <span class="nx">date</span> <span class="o">=</span> <span class="nx">date</span> <span class="o">||</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+    <span class="nx">format</span> <span class="o">=</span> <span class="nx">format</span> <span class="o">||</span> <span class="s2">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">;</span>
+    <span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span> <span class="o">||</span> <span class="p">{};</span>
 
-        <span class="kd">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="nx">d</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//天</span>
-                        <span class="nx">date</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
-                <span class="p">},</span>
-                <span class="nx">M</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//月</span>
-                        <span class="nx">date</span><span class="p">.</span><span class="nx">setMonth</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
-                <span class="p">},</span>
-                <span class="nx">m</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//分钟</span>
-                        <span class="nx">date</span><span class="p">.</span><span class="nx">setMinutes</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
-                <span class="p">},</span>
-                <span class="nx">H</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//小时</span>
-                        <span class="nx">date</span><span class="p">.</span><span class="nx">setHours</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
-                <span class="p">},</span>
-                <span class="nx">y</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//年</span>
-                        <span class="nx">date</span><span class="p">.</span><span class="nx">setFullYear</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
-                <span class="p">},</span>
-                <span class="nx">s</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//秒</span>
-                        <span class="nx">date</span><span class="p">.</span><span class="nx">setSeconds</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
-                <span class="p">},</span>
-                <span class="nx">S</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//毫秒</span>
-                        <span class="nx">date</span><span class="p">.</span><span class="nx">setMilliseconds</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMilliseconds</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
-                <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">d</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//天</span>
+            <span class="nx">date</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">M</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//月</span>
+            <span class="nx">date</span><span class="p">.</span><span class="nx">setMonth</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">m</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//分钟</span>
+            <span class="nx">date</span><span class="p">.</span><span class="nx">setMinutes</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">H</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//小时</span>
+            <span class="nx">date</span><span class="p">.</span><span class="nx">setHours</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">y</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//年</span>
+            <span class="nx">date</span><span class="p">.</span><span class="nx">setFullYear</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">s</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//秒</span>
+            <span class="nx">date</span><span class="p">.</span><span class="nx">setSeconds</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">S</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//毫秒</span>
+            <span class="nx">date</span><span class="p">.</span><span class="nx">setMilliseconds</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMilliseconds</span><span class="p">()</span> <span class="o">+</span> <span class="nx">v</span><span class="p">);</span>
         <span class="p">}</span>
-        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="k">in</span> <span class="nx">options</span><span class="p">){</span>
-                <span class="nx">cfg</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">cfg</span><span class="p">[</span><span class="nx">k</span><span class="p">](</span><span class="nx">options</span><span class="p">[</span><span class="nx">k</span><span class="p">]);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">formatDate</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="nx">format</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="k">in</span> <span class="nx">options</span><span class="p">){</span>
+        <span class="nx">cfg</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">cfg</span><span class="p">[</span><span class="nx">k</span><span class="p">](</span><span class="nx">options</span><span class="p">[</span><span class="nx">k</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">formatDate</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="nx">format</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table><p><strong>说明</strong></p>
@@ -387,8 +387,8 @@ tt.literal {
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;startTime&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;startTime&quot;</span>  <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;easyui-datetimebox&quot;</span>
-        <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">&quot;required:true,missingMessage:&#39;开始时间不能为空&#39;, editable:false,</span>
-<span class="s2">        value:$.getDateStr({H:-1})&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;width:183px;&quot;</span> <span class="o">/&gt;</span>
+    <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">&quot;required:true,missingMessage:&#39;开始时间不能为空&#39;, editable:false,</span>
+<span class="s2">    value:$.getDateStr({H:-1})&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;width:183px;&quot;</span> <span class="o">/&gt;</span>
 </pre></div>
 </td></tr></table><p><strong>说明</strong></p>
 <p>这里的 <tt class="docutils literal"><span class="pre">value:$.getDateStr({H:-1})</span></tt> 即是设置初始时间为当前时间的前一个小时</p>
@@ -416,17 +416,22 @@ tt.literal {
         </a>
     </li>
     <li>
-        新一篇：<a href="/"> 没有了，回到首页</a>
+        新一篇：<a href="/posts/js-include/">
+            js获取项目根路径及实现include
+        </a>
     </li>
 </ul>    <hr>
     <h3>相关阅读</h3>
     <ul>
         <li><a href="/posts/esayui-datagrid-reloaddata/">修改EasyUI源码，解决datagrid重复请求数据的问题</a></li>
+        <li><a href="/posts/js-include/">js获取项目根路径及实现include</a></li>
     </ul>
     <br>
     <h3>最新文章</h3>
     <ul>
 <li>
+        <a href="/posts/js-include/">js获取项目根路径及实现include</a>
+        </li><li>
         <a href="/posts/js-datetime-format-init/">js时间日期格式化及EasyUI时间控件的初始化</a>
         </li><li>
         <a href="/posts/esayui-datagrid-reloaddata/">修改EasyUI源码，解决datagrid重复请求数据的问题</a>

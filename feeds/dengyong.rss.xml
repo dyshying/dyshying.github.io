@@ -1,5 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>邓勇的博客</title><link>http://www.dengyong.me/</link><description></description><atom:link href="http://www.dengyong.me/feeds%5Cdengyong.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 13 Dec 2014 20:36:00 +0800</lastBuildDate><item><title>js获取项目根路径及实现include</title><link>http://www.dengyong.me/posts/js-include/</link><description>&lt;div class="section" id="id1"&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>邓勇的博客</title><link>http://www.dengyong.me/</link><description></description><atom:link href="http://www.dengyong.me/feeds%5Cdengyong.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 23 Dec 2014 22:27:00 +0800</lastBuildDate><item><title>面试题(1):从反编译看访问速度</title><link>http://www.dengyong.me/posts/java-decompile-view-visit-speed/</link><description>&lt;div class="section" id="id2"&gt;
+&lt;h2&gt;题目&lt;/h2&gt;
+&lt;p&gt;有这样一个面试题，如下代码中哪种方式效率高（代码2、3行）&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;intValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;valueOf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intValue&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;div class="section" id="id3"&gt;
+&lt;h2&gt;分析&lt;/h2&gt;
+&lt;p&gt;为了分析这个问题，我们编写如下代码然后进行编译&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dengyong&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Main&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;intValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;valueOf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intValue&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;然后我们把编译好的Main.class进行反编译，结果如下:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dengyong&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Main&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;intValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;valueOf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;500&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;valueOf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intValue&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;看到这，到底谁的速度更快，我想大家应该都很清楚了&lt;/div&gt;
+&lt;div class="line"&gt;&lt;tt class="docutils literal"&gt;String str1 = &amp;quot;&amp;quot; + 500;&lt;/tt&gt; 被编译器优化成了 &lt;tt class="docutils literal"&gt;String str1 = &amp;quot;500&amp;quot;;&lt;/tt&gt;&lt;/div&gt;
+&lt;div class="line"&gt;很显然这种方式比 &lt;tt class="docutils literal"&gt;String str2 = String.valueOf(intValue);&lt;/tt&gt; 快&lt;/div&gt;
+&lt;/div&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;访问常量比方法调用速度快&lt;/li&gt;
+&lt;li&gt;可以看一下 &lt;tt class="docutils literal"&gt;String.valueOf&lt;/tt&gt; 方法，其调用过程还是挺复杂的&lt;/li&gt;
+&lt;li&gt;Java中还有一个字符串池的概念， &lt;tt class="docutils literal"&gt;String str1 = &amp;quot;500&amp;quot;;&lt;/tt&gt; 这个会查看一下字符串池中是否有&amp;quot;500&amp;quot;这个字符串，如果有则直接把str1指向池中的这个字符串，就不用创建字符串对象了，而 &lt;tt class="docutils literal"&gt;String.valueOf&lt;/tt&gt; 的方法最终调用的是一个 &lt;tt class="docutils literal"&gt;new String&lt;/tt&gt; ，并且传递的参数不是字符串常量，而是一个变量，所以每次都会创建字符串对象&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id4"&gt;
+&lt;h2&gt;总结&lt;/h2&gt;
+&lt;p&gt;请不要忽视或低估了jdk编译器的优化能力&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id5"&gt;
+&lt;h2&gt;附:&lt;/h2&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;JDK版本: 1.6&lt;/div&gt;
+&lt;div class="line"&gt;使用的反编译工具: Java Decompiler&lt;/div&gt;
+&lt;div class="line"&gt;反编译工具版本：&lt;/div&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;1）JD-GUI  version 0.3.4&lt;/div&gt;
+&lt;div class="line"&gt;2）JD-Core version 0.6.1&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;完&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">DengYong</dc:creator><pubDate>Tue, 23 Dec 2014 22:27:00 +0800</pubDate><guid>tag:www.dengyong.me,2014-12-23:posts/java-decompile-view-visit-speed/</guid><category>面试</category><category>笔试</category><category>Java</category><category>反编译</category></item><item><title>js获取项目根路径及实现include</title><link>http://www.dengyong.me/posts/js-include/</link><description>&lt;div class="section" id="id1"&gt;
 &lt;h2&gt;背景介绍&lt;/h2&gt;
 &lt;div class="line-block"&gt;
 &lt;div class="line"&gt;做前后端分离，前端使用nginx，后端使用tomcat。&lt;/div&gt;

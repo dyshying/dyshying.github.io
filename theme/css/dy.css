@@ -41,3 +41,13 @@ tt.literal {
     text-align: center;
     background-color: #D9EDF7;
 }
+.docutils p{
+    margin: 0;
+    line-height: 20px;
+}
+.docutils p.first{
+    margin-top: 4px;
+}
+.docutils p.last{
+    margin-bottom: 6px;
+}

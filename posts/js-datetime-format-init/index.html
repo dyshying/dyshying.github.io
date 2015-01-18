@@ -335,13 +335,14 @@
 <tr><td>$.getDateStr({M:-1},'yyyy-MM')</td>
 <td>2014-11</td>
 </tr>
-<tr><td>var d = new Date();</td>
+<tr><td rowspan="3"><p class="first">var d = new Date();</p>
+<p>d.setDate(25);</p>
+<p class="last">$.getDateStr(d,{M:-1},'yyyy-MM-dd 00:00:00');</p>
+</td>
 <td rowspan="3">2014-12-25 00:00:00</td>
 </tr>
-<tr><td>d.setDate(25);</td>
-</tr>
-<tr><td>$.getDateStr(d,{M:-1},'yyyy-MM-dd 00:00:00');</td>
-</tr>
+<tr></tr>
+<tr></tr>
 </tbody>
 </table>
 </div>

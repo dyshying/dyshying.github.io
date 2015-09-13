@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>博客开通了- 邓勇的博客
+    <title>金额格式化- 邓勇的博客
 </title>
     <link href="/theme/css/pygment.css" type="text/css" rel="stylesheet">
 	<link href="/theme/css/progress.css" type="text/css" rel="stylesheet">
@@ -44,10 +44,10 @@
                         <li >
                             <a href="/">首页</a>
                         </li>
-                                <li >
+                                <li  class="active" >
                                     <a href="/category/cheng-xu.html">程序</a>
                                 </li>
-                                <li  class="active" >
+                                <li >
                                     <a href="/category/ren-sheng.html">人生</a>
                                 </li>
                         <li  >
@@ -61,31 +61,82 @@
     <div class="container row">
         <div class="col-md-9">
 <div class="article-body">
-<h1>博客开通了</h1>
+<h1>金额格式化</h1>
 <span class="label label-default">
-2014-11-30 23:16
+2015-09-13 20:36
 </span>&nbsp;
 <div class="btn-group btn-group-xs">
-    <a class="btn btn-primary" href="/tag/bo-ke.html">博客</a>
+    <a class="btn btn-primary" href="/tag/jin-e-ge-shi-hua.html">金额格式化</a>
+</div>
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-primary" href="/tag/javascript.html">javascript</a>
 </div>
 <hr>
 <div class="article-content">
-<h2>1、一点点经历</h2>
-<p>今天博客终于开通了，虽然这一天来得比预期的晚，但我还是觉得很兴奋<br />
-当时是五一，不小心申请了一个域名<br />
-当时是六月，想起用这个域名来作一个博客<br />
-后来是七月，发现了jfinal<br />
-到了八月，没用bootstrap，没用jquery写了一个页面<br />
-也是八月，用jfinal、mysql搭建好后台框架<br />
-还是八月，用Java自定义标签对页面元素进行一些封装，又发现了sitemesh这个好东东<br />
-还是八月，使用原生态的js实现了一个语法高亮插件，支持IE8、chrome、firefox，支持Java和javascript两种语法的高亮显示，代码量压缩后只有1K <br />
-九月和十月，想不起具体做什么了，学了一下django、nodejs、easyui<br />
-到十一月，发现了pelican、 jinja2，学了一下git，学了一下bootstrap，搭建了本博客  </p>
-<h2>2、关于本博客的规划</h2>
-<p>我想主要是写一些在工作和学习中遇到的问题及其解决办法，以及其它</p>
-<h2>3、一些感慨</h2>
-<p>当你去想一些事情的时候，你会有所收获；<br />
-当你去做一些事情的时候，你也会有所收获~</p>
+<div class="section" id="id2">
+<h2>代码</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * 格式化金额</span>
+<span class="cm"> * @param num 金额</span>
+<span class="cm"> * @returns 每3位添加一个逗号</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">formatMoney</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num</span><span class="o">+</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\.&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\d{3}/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="p">;</span>
+    <span class="p">}).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\,$/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">r</span> <span class="o">+=</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">r</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="id3">
+<h2>说明</h2>
+<div class="line-block">
+<div class="line">该function的作用就是把数字转成每隔3个数字添加一个逗号的字符串</div>
+<div class="line">代码逻辑还是挺简单的，主要是js的String对象没发现有reverse方法，但数组有</div>
+</div>
+<p><strong>调用</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="60%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">调用方式</th>
+<th class="head">返回值</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>formatMoney(1234567.9012)</td>
+<td>1,234,567.9012</td>
+</tr>
+<tr><td>formatMoney(987654.32)</td>
+<td>987,654.32</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">完</div>
+</div>
+</div>
+
 </div>
 <div>
     <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a></div>
@@ -94,22 +145,28 @@
 <hr>
 <div class="alert alert-info">
     <p>版权属于：<a href="http://www.dengyong.me">邓勇的博客</a></p>
-    <p>原文地址：<a href="http://www.dengyong.me/posts/blogstart/">
-        http://www.dengyong.me/posts/blogstart/
+    <p>原文地址：<a href="http://www.dengyong.me/posts/money-format/">
+        http://www.dengyong.me/posts/money-format/
     </a></p>
     <p>转载时请以链接形式注明原始出处及本声明。
 </div>
 
 <ul>
     <li>
-        旧一篇：<a href="/"> 没有了，回到首页</a>
-    </li>
-    <li>
-        新一篇：<a href="/posts/esayui-datagrid-reloaddata/">
-            修改EasyUI源码，解决datagrid重复请求数据的问题
+        旧一篇：<a href="/posts/java-decompile-view-visit-speed/">
+            面试题(1):从反编译看访问速度
         </a>
     </li>
-</ul>    <br>
+    <li>
+        新一篇：<a href="/"> 没有了，回到首页</a>
+    </li>
+</ul>    <hr>
+    <h3>相关阅读</h3>
+    <ul>
+        <li><a href="/posts/js-datetime-format-init/">js时间日期格式化及EasyUI时间控件的初始化</a></li>
+        <li><a href="/posts/js-include/">js获取项目根路径及实现include</a></li>
+    </ul>
+    <br>
     <h3>最新文章</h3>
     <ul>
 <li>

@@ -57,7 +57,8 @@ $(function(){
 			$("a").click(function(){
 				var t = $(this);
 				var href = t.attr("href");
-				if(href && !/^(javascript|#).*/i.test(href)) {
+				var target = t.attr("target") || "_self";
+				if(href && !/^(javascript|#).*/i.test(href) && target == "_self") {
 					progress.stop();
 					progress.removeClass("done");
 					doLoad(progress, 0, 0, 10);

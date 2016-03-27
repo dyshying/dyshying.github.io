@@ -112,7 +112,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startWith</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startWith</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
     <span class="k">return</span> <span class="nx">str</span><span class="o">!=</span><span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="o">!=</span><span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="o">!=</span><span class="s2">&quot;&quot;</span> <span class="o">&amp;&amp;</span>
             <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="o">&lt;=</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">==</span><span class="nx">str</span><span class="p">;</span>
@@ -180,7 +180,7 @@
 64
 65
 66
-67</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//修正路径</span>
+67</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">//修正路径</span>
 <span class="kd">function</span> <span class="nx">fixPath</span><span class="p">(</span><span class="nx">src</span><span class="p">){</span>
     <span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\/\.\//g</span><span class="p">,</span> <span class="s2">&quot;\/&quot;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([^\:])\/+/g</span><span class="p">,</span> <span class="s2">&quot;$1\/&quot;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;../&quot;</span><span class="p">);</span>
@@ -266,7 +266,7 @@
 94
 95
 96
-97</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//获取文件后缀名</span>
+97</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">//获取文件后缀名</span>
 <span class="kd">function</span> <span class="nx">getFileExt</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
     <span class="kd">var</span> <span class="nx">reg</span> <span class="o">=</span> <span class="sr">/.*\.([^\.\/]+)/g</span><span class="p">;</span>
     <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">reg</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">);</span>
@@ -307,7 +307,7 @@
 76
 77
 78
-79</pre></div></td><td class="code"><div class="highlight"><pre><span class="nx">include</span><span class="p">([</span>
+79</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nx">include</span><span class="p">([</span>
     <span class="s2">&quot;../lib/jquery-easyui-1.4/themes/metro/easyui.css&quot;</span><span class="p">,</span>
     <span class="s2">&quot;../lib/jquery-easyui-1.4/themes/icon.css&quot;</span><span class="p">,</span>
     <span class="s2">&quot;resource/css/jeasyui-icon.css&quot;</span><span class="p">,</span>
@@ -337,7 +337,7 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span class="nx">include</span><span class="p">([{</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nx">include</span><span class="p">([{</span>
         <span class="nx">ext</span><span class="o">:</span><span class="s1">&#39;js&#39;</span><span class="p">,</span>
         <span class="nx">file</span><span class="o">:</span> <span class="s1">&#39;yourjavascriptfilepath&#39;</span>
     <span class="p">},{</span>
